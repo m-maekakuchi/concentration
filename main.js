@@ -1,9 +1,11 @@
 'use strict'
 
-let maxPairs = 6;
+const maxPairs = 6;
 let firstFlg = true;
 let firstCard;
 let timer;
+let turnCount = 0;  // カードをめくった回数
+let pairCount = 0;  // できたペアの数
 
 window.onload = function() {
   let ary = [];
@@ -14,9 +16,9 @@ window.onload = function() {
 
   shuffle(ary);
 
-  let panel = document.getElementById('panel');
+  const panel = document.getElementById('panel');
   for (let i = 0; i < maxPairs*2; i++) {
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.className = "card";
     div.number = ary[i];
     div.onclick = turn;
@@ -26,21 +28,22 @@ window.onload = function() {
 
 //Fisher-Yates shuffleアルゴリズムを用いて配列をシャッフル
 function shuffle(ary) {
-  let length = ary.length;
+  const length = ary.length;
   for (let i = length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * (i + 1));
     [ary[i], ary[j]] = [ary[j], ary[i]];
   }
 }
 
 function turn(e) {
-  let div = e.target;
+  const div = e.target;
   
   if (timer) return;
 
   //裏向きのカードをクリックした場合
   if (div.number) {
     div.innerHTML = `<img src="img/card${div.number}.png">`;
+    turnCount++;
   } else {
     return;
   }
@@ -55,6 +58,7 @@ function turn(e) {
     if (div.number === firstCard.number) {
       firstCard.classList.add("finish");
       div.classList.add("finish");
+      pairCount++;
     //1枚目と一致しない場合
     } else {
       timer = setTimeout(
@@ -65,8 +69,13 @@ function turn(e) {
         }
         , 1000
       );
-      console.log('timeID:' + timer);
     }
     firstFlg = true;
+  }
+  if (pairCount === maxPairs) {
+    let result = document.getElementById('result');
+    result.innerHTML = `<p>カードをめくった回数</p><p>${turnCount}回</p>`;
+    console.log(turnCount);
+    
   }
 }
