@@ -1,0 +1,23 @@
+#panel {
+  width: 720px;
+  height: 490px;
+  margin: 50px auto;
+}
+
+.card {
+  width: 120px;
+  height: 180px;
+  float: left;
+  cursor: pointer;
+  background-image: url(../img/back.png);
+  background-size: contain;
+}
+
+img {
+  width: 120px;
+  height: 180px;
+}
+
+.finish {
+  cursor: default;
+}
