@@ -1,21 +1,42 @@
 'use strict'
 
-const maxPairs = 6;
+const maxPairs = 12;
 let firstFlg = true;
 let firstCard;
 let timer;
 let turnCount = 0;  // カードをめくった回数
 let pairCount = 0;  // できたペアの数
 
-window.onload = function() {
-  let ary = [];
+const sixButton = document.getElementById('sixButton');
+const twelveButton = document.getElementById('twelveButton');
+
+sixButton.addEventListener('click', ()=> {
+  const title = document.getElementById('title');
+  title.remove();
+
+  const maxPairs = 6;
+  displayCards(maxPairs);
+});
+
+twelveButton.addEventListener('click', ()=> {
+  const title = document.getElementById('title');
+  title.remove();
+
+  const maxPairs = 12;
+  displayCards(maxPairs);
+});
+
+
+
+function displayCards(maxPairs) {
+  const ary = [];
   for (let i = 1; i <= maxPairs; i++) {
     ary.push(i);
     ary.push(i);
   }
-
+  
   shuffle(ary);
-
+  
   const panel = document.getElementById('panel');
   for (let i = 0; i < maxPairs*2; i++) {
     const div = document.createElement('div');
@@ -24,7 +45,7 @@ window.onload = function() {
     div.onclick = turn;
     panel.appendChild(div);
   }
-};
+}
 
 //Fisher-Yates shuffleアルゴリズムを用いて配列をシャッフル
 function shuffle(ary) {
